@@ -10,10 +10,10 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
 #Variables that contains the user credentials to access Twitter API 
-access_token = "828392731139506176-fIkWgydz0fzrmWSo6kWMoxLqVQZxVRu"
-access_token_secret = "A7LUXVVAFWTEVh67NZNjrMqBrrVR8FbuNgiwbWjAHQBPi"
-consumer_key = "i7HAB7tsd68VCQUR2hGl3vz6J"
-consumer_secret = "nvVcLE1Trpt0007kvirrBlujjca3D6ZLYZtSFj6d4j0aAuwmtQ"
+access_token = "<input here>"
+access_token_secret = "<input here>"
+consumer_key = "<input here>"
+consumer_secret = "<input here>"
 
 class StdOutListener(StreamListener):
 
