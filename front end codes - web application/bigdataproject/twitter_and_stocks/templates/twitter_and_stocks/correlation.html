@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Correlation</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/common.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+          type="text/css">
+
+    <!-- jQuery -->
+    <script src="/static/js/jquery-3.2.1.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Twitter & Stocks</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+              <li><a href="{% url 'twitter_and_stocks:ibmpage' %}">IBM</a></li>
+              <li><a href="{% url 'twitter_and_stocks:teslapage' %}">Tesla</a></li>
+              <li><a href="{% url 'twitter_and_stocks:unitedpage' %}">United Airlines</a></li>
+              <li><a href="{% url 'twitter_and_stocks:snappage' %}">Snap Inc.</a></li>
+              <li><a href="{% url 'twitter_and_stocks:americanpage' %}">American Airlines</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#">Correlation<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid page-wrapper">
+        <div class="row">
+            <div class="jumbotron">
+                <h1>CORRELATION</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-md-offset-1">
+                <table class="table table-hover table-bordered" id="ibm-table">
+                    <thead>
+                        <th style="min-width: 115px">Company</th>
+                        <th>Pearson Coefficient</th>
+                        <th>Spearman Coefficient</th>
+                    </thead>
+                    <tbody>
+                        {% for row in object %}
+                            <tr>
+                                <td>{{row.company}}</td>
+                                <td>{{row.pearson}}</td>
+                                <td>{{row.spearman}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Correlation</h3>
+                  </div>
+                  <div class="panel-body">
+                    <!--<canvas id="correlation-chart"></canvas>-->
+                      <div class='tableauPlaceholder' id='viz1494994269938' style='position: relative'><noscript><a href='#'><img alt='Sheet 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ji&#47;jinali&#47;Sheet1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='site_root' value='' /><param name='name' value='jinali&#47;Sheet1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ji&#47;jinali&#47;Sheet1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1494994269938');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-1"></div>
+        </div>
+
+
+
+        <script>
+
+                var pearson=[];
+                $('.table tr td:nth-child(2)').each(function(index){
+                    pearson[index]=$(this).text()
+                });
+                var spearman=[];
+                $('.table tr td:nth-child(3)').each(function(index){
+                    spearman[index]=$(this).text()
+                });
+                var company=[];
+                $('.table tr td:nth-child(1)').each(function(index){
+                    company[index]=$(this).text()
+                });
+                var ctx = document.getElementById("correlation-chart");
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: company,
+                        datasets: [
+                            {
+                                data: pearson,
+                                label: 'Pearson Coefficient',
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                ],
+                                borderWidth: 1
+                            },{
+                                data: spearman,
+                                label: 'Spearman Coefficient',
+                                backgroundColor: 'rgba(255,153,0,0.4)',
+                                borderColor: [
+                                    'rgba(255,153,0,1)',
+                                ],
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    autoSkip: true,
+                                    maxTicksLimit: 20
+                                }
+                            }]
+                        }
+                    }
+
+                });
+            </script>
+    </div>
+
+</body>
+</html>

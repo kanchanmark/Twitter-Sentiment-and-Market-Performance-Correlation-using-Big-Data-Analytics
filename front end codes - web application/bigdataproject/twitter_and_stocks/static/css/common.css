@@ -1,0 +1,9 @@
+.page-wrapper {
+    padding-top: 80px;
+}
+.table td {
+    text-align: right;
+}
+.nav.navbar-nav {
+    font-size: 22px;
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>United</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/common.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+          type="text/css">
+
+    <!-- jQuery -->
+    <script src="/static/js/jquery-3.2.1.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Twitter & Stocks</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+              <li><a href="{% url 'twitter_and_stocks:ibmpage' %}">IBM</a></li>
+              <li><a href="{% url 'twitter_and_stocks:teslapage' %}">Tesla</a></li>
+              <li class="active"><a href="#">United Airlines <span class="sr-only">(current)</span></a></li>
+              <li><a href="{% url 'twitter_and_stocks:snappage' %}">Snap Inc.</a></li>
+              <li><a href="{% url 'twitter_and_stocks:americanpage' %}">American Airlines</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'twitter_and_stocks:correlationpage' %}">Correlation</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid page-wrapper">
+        <div class="row">
+            <div class="jumbotron">
+                <h1>UNITED AIRLINES</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <h2>United Continental Holdings, Inc. (UAL)</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-3 col-md-offset-1">
+                <p>233 South Wacker Drive</p>
+                <p>Chicago, IL 60606</p>
+                <p>United States</p>
+                <p>872-825-4000</p>
+                <p><a href="http://newsroom.united.com">http://newsroom.united.com</a></p>
+                <p>&nbsp;</p>
+            </div>
+            <div class="col-xs-12 col-md-8">
+                <p>Sector: <b>Services</b></p>
+                <p>Industry: <b>Major Airlines</b></p>
+                <p>Full Time Employees: <b>88,400</b></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <p>United Continental Holdings, Inc., together with its subsidiaries, provides air
+                    transportation services in North America, the Asia-Pacific, Europe, the Middle East, Africa,
+                    and Latin America. The company transports people and cargo through its mainline and regional
+                    operations. As of December 31, 2016, it operated a fleet of 1,231 aircraft. United Continental
+                    Holdings, Inc. also sells fuel; and offers maintenance, catering, and ground handling services for
+                    third parties. The company was formerly known as UAL Corporation and changed its name to United
+                    Continental Holdings, Inc. in October 2010. United Continental Holdings, Inc. was founded in 1934
+                    and is based in Chicago, Illinois.</p>
+                <p>&nbsp;</p><p>&nbsp;</p>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-md-offset-1">
+                <table class="table table-hover table-bordered" id="ibm-table">
+                    <thead>
+                        <th style="min-width: 115px">Date</th>
+                        <th>Stock Open Price</th>
+                        <th>Stock Close Price</th>
+                        <th>Aggregate Sentiment</th>
+                    </thead>
+                    <tbody>
+                        {% for row in object %}
+                            <tr>
+                                <td style="text-align: left">{{row.date}}</td>
+                                <td>{{row.open_price}}</td>
+                                <td>{{row.close_price}}</td>
+                                <td>{{row.aggregate_sentiment}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Daily Stock Price</h3>
+                  </div>
+                  <div class="panel-body">
+                    <canvas id="stock-chart"></canvas>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">Daily Aggregate Sentiment</h3>
+                  </div>
+                  <div class="panel-body">
+                    <canvas id="sentiment-chart"></canvas>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-1"></div>
+        </div>
+        <script>
+
+                var stockVariationData=[];
+                $('.table tr td:nth-child(3)').each(function(index){
+                    stockVariationData[index]=$(this).text()
+                });
+                var sentimentVariationData=[];
+                $('.table tr td:nth-child(4)').each(function(index){
+                    sentimentVariationData[index]=$(this).text()
+                });
+                var dates=[];
+                $('.table tr td:nth-child(1)').each(function(index){
+                    dates[index]=$(this).text()
+                });
+                var ctx = document.getElementById("stock-chart");
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            data: stockVariationData,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    autoSkip: true,
+                                    maxTicksLimit: 20
+                                }
+                            }]
+                        }
+                    }
+
+                });
+                var ctx = document.getElementById("sentiment-chart");
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            data: sentimentVariationData,
+                            backgroundColor: [
+                                'rgba(255,153,0,0.4)'
+                            ],
+                            borderColor: [
+                                'rgba(255,153,0,1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    autoSkip: true,
+                                    maxTicksLimit: 20
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: 0.5
+                                }
+                            }]
+                        }
+                    }
+                });
+            </script>
+    </div>
+
+</body>
+</html>
