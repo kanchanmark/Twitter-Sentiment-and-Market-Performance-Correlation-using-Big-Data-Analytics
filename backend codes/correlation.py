@@ -13,9 +13,9 @@ if __name__ == "__main__":
 	corrType= 'pearson'
 	arr1 = []
 	arr2 = []
-	data =  sc.textFile('file:/Users/jinaligandhi/Desktop/arr1.txt')
+	data =  sc.textFile('file:/')
 	arr1 = [x for x in data.toLocalIterator()]
-	data1 =  sc.textFile('file:/Users/jinaligandhi/Desktop/arr2.txt')
+	data1 =  sc.textFile('file:/')
 	arr2 = [x for x in data1.toLocalIterator()]
 	
 	
